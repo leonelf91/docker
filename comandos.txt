@@ -1,0 +1,55 @@
+1) Buildear el dockerfile para crear imagen de la base de datos:
+sudo docker build -t mimysql:2 .
+
+2) Iniciar BD :
+sudo docker run -it --name contenedormysql mimysql:2
+
+3) Buildear el dockerfile para crear la imagen del tomcat :
+sudo docker build -t miservertomcat:3 .
+
+4) Crear contenedor en base a la imagen, haciendo referencia a la BD :
+sudo docker run -it -p 8080:8080 --name contenedortomcat --link contenedormysql:mimysql miservertomcat:3
+
+5) Realizar cambios en Atom, buildear, generar el directorio dist, copiarlo y pegarlo en directorio docker:
+ng build --aot --prod
+rm /home/leonel/docker/dockerNode/dist/ -R
+cp /home/leonel/facturacionAngular/dist /home/leonel/docker/dockerNode/dist -R
+
+6) Buildear el dockerfile para crear la imagen del node :
+docker build -t imagen-node:4 .
+
+7) Crear contenedor en base a la imagen, haciendo referencia a el tomcat :
+sudo docker run -it -p 80:80 --name contenedor-node --link contenedortomcat:mitomcat imagen-node:4
+
+Una vez creados ambos contenedores, para iniciarlos:
+
+
+ACLARACION: Aca tenemos un ejemplo que se levanta un centos para usarlo de cliente contra la BD y ver si el puerto esta expuesto con un telnet:
+sudo docker run  -it --name namespace --link namespaceContenedorBD:mimysql centos:centos7 /bin/bash
+
+
+
+Ver todos los containers:
+sudo docker ps -a
+
+Borrar contenedor:
+sudo docker rm "namespace"
+
+Parar contenedor :
+sudo docker stop  "namespace"
+
+Levantar contenedor :
+sudo docker stop  "namespace"
+
+Ingresar al contenedor:
+docker exec -it "namespace" bash
+
+
+Ver logs del docker :
+sudo docker logs "namespace" -f
+
+Ver imagenes del docker:
+sudo docker images
+
+Borrar imagenes del docker:
+sudo docker rmi id_imagen
