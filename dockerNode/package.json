@@ -29,7 +29,7 @@
     "@types/html2canvas": "0.0.35",
     "express": "^4.17.1",
     "html2canvas": "^1.0.0-rc.1",
-    "jspdf": "^1.4.1",
+    "jspdf": "^2.3.1",
     "rxjs": "~6.4.0",
     "rxjs-compat": "^6.5.2",
     "sweetalert2": "^7.26.9",
